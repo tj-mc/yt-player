@@ -1,5 +1,6 @@
-const EventEmitter = require('events').EventEmitter
-const loadScript = require('load-script2')
+// Forked from https://github.com/feross/yt-player
+
+import { EventEmitter } from 'events'
 
 const YOUTUBE_IFRAME_API_SRC = 'https://www.youtube.com/iframe_api'
 
@@ -10,6 +11,39 @@ const YOUTUBE_STATES = {
   2: 'paused',
   3: 'buffering',
   5: 'cued'
+}
+
+/**
+ * @author Feross Aboukhadijeh https://github.com/feross https://feross.org/opensource
+ * @licence MIT
+ * @param src
+ * @param attrs
+ * @param parentNode
+ * @returns {Promise}
+ */
+function loadScript2 (src, attrs, parentNode) {
+  return new Promise((resolve, reject) => {
+    const script = document.createElement('script')
+    script.async = true
+    script.src = src
+
+    for (const [k, v] of Object.entries(attrs || {})) {
+      script.setAttribute(k, v)
+    }
+
+    script.onload = () => {
+      script.onerror = script.onload = null
+      resolve(script)
+    }
+
+    script.onerror = () => {
+      script.onerror = script.onload = null
+      reject(new Error(`Failed to load ${src}`))
+    }
+
+    const node = parentNode || document.head || document.getElementsByTagName('head')[0]
+    node.appendChild(script)
+  })
 }
 
 const YOUTUBE_ERROR = {
@@ -39,8 +73,10 @@ const loadIframeAPICallbacks = []
 /**
  * YouTube Player. Exposes a better API, with nicer events.
  * @param {HTMLElement|selector} element
+ * @author Feross Aboukhadijeh https://github.com/feross https://feross.org/opensource
+ * @licence MIT
  */
-class YouTubePlayer extends EventEmitter {
+export class YouTubePlayer extends EventEmitter {
   constructor (element, opts) {
     super()
 
@@ -273,7 +309,7 @@ class YouTubePlayer extends EventEmitter {
     // if user includes a hardcoded <script> tag in HTML for performance, another
     // one will not be added
     if (!isLoading) {
-      loadScript(YOUTUBE_IFRAME_API_SRC).catch(err => {
+      loadScript2(YOUTUBE_IFRAME_API_SRC).catch(err => {
         while (loadIframeAPICallbacks.length) {
           const loadCb = loadIframeAPICallbacks.shift()
           loadCb(err)
@@ -516,5 +552,3 @@ class YouTubePlayer extends EventEmitter {
     this._interval = null
   }
 }
-
-module.exports = YouTubePlayer

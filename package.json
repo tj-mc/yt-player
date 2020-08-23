@@ -1,40 +1,19 @@
 {
-  "name": "yt-player",
+  "name": "yt-player-es",
   "description": "Simple, robust YouTube Iframe Player API",
-  "version": "3.4.3",
+  "version": "1.0.0",
   "author": {
-    "name": "Feross Aboukhadijeh",
-    "email": "feross@feross.org",
-    "url": "https://feross.org"
-  },
-  "bugs": {
-    "url": "https://github.com/feross/yt-player/issues"
-  },
-  "dependencies": {
-    "load-script2": "^2.0.1"
+    "name": "Tom McIntosh"
   },
   "devDependencies": {
     "standard": "*"
   },
-  "homepage": "https://github.com/feross/yt-player",
-  "keywords": [
-    "youtube",
-    "youtube player",
-    "player",
-    "iframe",
-    "api",
-    "youtube api",
-    "youtube iframe api",
-    "iframe api",
-    "yt player",
-    "yt-player",
-    "youtube embed"
-  ],
+  "homepage": "https://github.com/tj-mc/yt-player-es",
   "license": "MIT",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/feross/yt-player.git"
+    "url": "git://github.com/tj-mc/yt-player-es.git"
   },
   "scripts": {
     "test": "standard"
