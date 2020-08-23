@@ -1,7 +1,7 @@
 {
   "name": "yt-player-es",
-  "description": "Simple, robust YouTube Iframe Player API",
-  "version": "1.0.0",
+  "description": "ES Module fork of yt-player",
+  "version": "1.0.1",
   "author": {
     "name": "Tom McIntosh"
   },
